@@ -1,0 +1,6 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/venv/Scripts/python.exe",
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter-notebook"
+  }
+}
