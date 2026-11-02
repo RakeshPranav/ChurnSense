@@ -507,7 +507,7 @@ python -m streamlit run app.py
 | Backend (FastAPI + model) | Render web service |
 | Frontend (static) | Vercel, root directory `frontend` |
 
-**Live demo:** https://YOUR-PROJECT.vercel.app
+**Live demo:** https://thechurnsenser.vercel.app/
 **API docs:** https://churnsense-pj86.onrender.com/docs
 
 > The backend runs on a free tier and may take up to a minute to wake up on the first request.
