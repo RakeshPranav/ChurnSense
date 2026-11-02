@@ -41,7 +41,7 @@ ChurnSense predicts whether a customer is likely to leave. The model is trained 
 
 | Light mode | Dark mode |
 |---|---|
-| ![Light UI](docs\Screenshot 2026-11-02 153526.png) | ![Dark UI](docs/screenshots/ui-dark.png) |
+| ![Light UI](docs/screenshots/ui-light.png) | ![Dark UI](docs/screenshots/ui-dark.png) |
 
 | Prediction result | API docs (`/docs`) |
 |---|---|
