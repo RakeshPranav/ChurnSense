@@ -1,4 +1,6 @@
-const API = "http://127.0.0.1:8000";
+const API = ["localhost", "127.0.0.1"].includes(location.hostname)
+  ? "http://127.0.0.1:8000"
+  : "https://churnsense-pj86.onrender.com";
 const $ = (id) => document.getElementById(id);
 const ARC_LEN = Math.PI * 80; // length of the semicircle gauge
 
