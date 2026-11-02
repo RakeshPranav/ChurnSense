@@ -1,0 +1,62 @@
+{
+  "num": {
+    "Age": {
+      "min": 18.0,
+      "max": 65.0,
+      "median": 39.0,
+      "is_int": true
+    },
+    "Tenure": {
+      "min": 1.0,
+      "max": 60.0,
+      "median": 32.0,
+      "is_int": true
+    },
+    "Usage Frequency": {
+      "min": 1.0,
+      "max": 30.0,
+      "median": 16.0,
+      "is_int": true
+    },
+    "Support Calls": {
+      "min": 0.0,
+      "max": 10.0,
+      "median": 3.0,
+      "is_int": true
+    },
+    "Payment Delay": {
+      "min": 0.0,
+      "max": 30.0,
+      "median": 12.0,
+      "is_int": true
+    },
+    "Total Spend": {
+      "min": 100.0,
+      "max": 1000.0,
+      "median": 661.11,
+      "is_int": false
+    },
+    "Last Interaction": {
+      "min": 1.0,
+      "max": 30.0,
+      "median": 14.0,
+      "is_int": true
+    }
+  },
+  "cat": {
+    "Gender": [
+      "Female",
+      "Male"
+    ],
+    "Subscription Type": [
+      "Basic",
+      "Premium",
+      "Standard"
+    ],
+    "Contract Length": [
+      "Annual",
+      "Monthly",
+      "Quarterly"
+    ]
+  }
+}
