@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ChurnSense | Customer Churn Prediction</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230a0a0a'/%3E%3Cpath d='M20 32 L40 54 L56 42 L74 62' fill='none' stroke='white' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='80' cy='68' r='10' fill='%23d4ff3a'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap bar">
+      <a class="brand" href="#top" aria-label="ChurnSense home">
+        <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true">
+          <rect class="logo-bg" width="32" height="32" rx="8" />
+          <path class="logo-line" d="M6 10 L13 17 L18 13 L24 20" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <circle class="logo-dot" cx="26" cy="22" r="3.4" />
+        </svg>
+        <span>Churn<b>Sense</b></span>
+      </a>
+      <nav class="nav">
+        <a href="#predict">Predict</a>
+        <a href="#how">How it works</a>
+        <a href="#about">About</a>
+      </nav>
+      <div class="actions">
+        <span id="apiPill" class="pill down"><i></i><span id="apiText">Checking API…</span></span>
+        <button id="themeBtn" class="icon-btn" type="button" aria-label="Toggle dark mode">
+          <span class="sun">☀️</span><span class="moon">🌙</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap">
+        <span class="eyebrow">Machine learning · Customer retention</span>
+        <h1>Know who's about to leave,<br /><span class="grad">before they do.</span></h1>
+        <p class="lead">
+          ChurnSense scores a customer's churn risk using a tuned classification model
+          served through a FastAPI backend.
+        </p>
+        <div class="chips-row">
+          <span class="tag">Leakage-safe pipeline</span>
+          <span class="tag">Tuned decision threshold</span>
+          <span class="tag">Live predictions</span>
+        </div>
+        <a class="cta" href="#predict">Try a prediction ↓</a>
+      </div>
+    </section>
+
+    <section id="predict" class="wrap layout">
+      <div class="card form-card">
+        <div class="card-head">
+          <div>
+            <h2>Customer details</h2>
+            <p class="muted">Adjust the inputs, then run the model.</p>
+          </div>
+          <div class="mini-actions">
+            <button type="button" id="resetBtn" class="ghost">Reset</button>
+            <button type="button" id="randBtn" class="ghost">🎲 Randomize</button>
+          </div>
+        </div>
+
+        <div id="toast" class="toast" hidden></div>
+        <div id="loadingForm" class="muted">Loading form from API…</div>
+
+        <form id="form" novalidate>
+          <div id="fields" class="grid"></div>
+          <button type="submit" id="submit" class="primary">
+            <span class="spin" hidden></span><span id="submitText">Predict churn</span>
+          </button>
+        </form>
+      </div>
+
+      <aside class="card result-card" id="resultCard">
+        <h2>Prediction</h2>
+
+        <div id="empty" class="empty">
+          <div class="empty-icon">📊</div>
+          <p>Run a prediction to see the churn score here.</p>
+        </div>
+
+        <div id="result" hidden>
+          <div class="gauge">
+            <svg viewBox="0 0 200 118" aria-hidden="true">
+              <path id="track" d="M 20 100 A 80 80 0 0 1 180 100" />
+              <path id="arc" d="M 20 100 A 80 80 0 0 1 180 100" />
+              <line id="thrLine" x1="0" y1="0" x2="0" y2="0" />
+            </svg>
+            <div class="gauge-read">
+              <div class="big"><span id="scoreNum">0</span><small>%</small></div>
+              <div class="muted tiny">churn score</div>
+            </div>
+          </div>
+
+          <div id="verdict" class="verdict"></div>
+          <p id="explain" class="muted center"></p>
+
+          <div class="facts">
+            <div><span class="muted tiny">Score</span><b id="fScore">-</b></div>
+            <div><span class="muted tiny">Threshold</span><b id="fThr">-</b></div>
+            <div><span class="muted tiny">Gap</span><b id="fGap">-</b></div>
+          </div>
+          <p class="note">A model score, not a calibrated probability.</p>
+        </div>
+
+        <div id="historyWrap" hidden>
+          <h3>Recent predictions</h3>
+          <ul id="history" class="history"></ul>
+        </div>
+      </aside>
+    </section>
+
+    <section id="how" class="wrap section">
+      <h2 class="center">How it works</h2>
+      <div class="steps">
+        <div class="step"><b>1</b><h3>Enter details</h3><p>The form is generated from the model's own feature schema, so it always matches training.</p></div>
+        <div class="step"><b>2</b><h3>Pipeline runs</h3><p>Preprocessing and the classifier run as one saved pipeline, so nothing drifts out of sync.</p></div>
+        <div class="step"><b>3</b><h3>Threshold decides</h3><p>The score is compared with a threshold chosen on out-of-fold predictions, not a default 0.5.</p></div>
+      </div>
+    </section>
+
+    <section id="about" class="wrap section about">
+      <h2 class="center">About</h2>
+      <p class="muted center">
+        Built with Python, scikit-learn and XGBoost for the model, FastAPI for serving, and plain
+        HTML, CSS and JavaScript for this interface.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">ChurnSense · Customer churn prediction · Built by Rakesh Pranav K S</div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
