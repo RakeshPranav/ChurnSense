@@ -3,7 +3,7 @@ const $ = (id) => document.getElementById(id);
 const ARC_LEN = Math.PI * 80; // length of the semicircle gauge
 
 let schema = null;
-const inputs = {};   // column -> { get(), set(v) }
+const inputs = {};   // column -> { get(), set(v), reset(), random() }
 const history = [];
 
 /* ---------- helpers ---------- */
@@ -27,7 +27,8 @@ function setTheme(t) {
 (function initTheme() {
   let saved = null;
   try { saved = localStorage.getItem("churnsense-theme"); } catch {}
-  setTheme(saved || "light");
+  setTheme(saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+})();
 $("themeBtn").addEventListener("click", () =>
   setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark"));
 
@@ -139,6 +140,7 @@ async function loadSchema() {
                                               : categoricalField(col, schema.cat[col]));
     });
     $("loadingForm").hidden = true;
+    $("submit").disabled = false;
     toast("");
   } catch {
     $("loadingForm").hidden = true;
